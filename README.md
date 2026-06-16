@@ -1,4 +1,4 @@
-# Hacknet Hyprland Dotfiles
+# Cyan Hyprland Dotfiles
 
 Personal Fedora + Hyprland 0.55+ dotfiles with a muted Hacknet / Hyprlust-inspired style.
 
