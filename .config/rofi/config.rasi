@@ -1,0 +1,130 @@
+configuration {
+  modi: "drun,run";
+  show-icons: false;
+  font: "JetBrainsMono Nerd Font 11";
+  drun-display-format: "{name}";
+  matching: "fuzzy";
+  scroll-method: 0;
+  cycle: true;
+}
+
+* {
+  background: #060d14;
+  background-alt: #0a141f;
+  panel: #0e1b29;
+  foreground: #b9cbd2;
+  muted: #708996;
+  accent: #7fb6c9;
+  success: #8bbf9f;
+  selected: #172836;
+  urgent: #b8a36f;
+
+  selected-normal-background: @panel;
+  selected-normal-foreground: @accent;
+  normal-background: transparent;
+  normal-foreground: @foreground;
+  alternate-normal-background: transparent;
+  alternate-normal-foreground: @foreground;
+  selected-urgent-background: @panel;
+  selected-urgent-foreground: @urgent;
+  urgent-background: transparent;
+  urgent-foreground: @urgent;
+  active-background: transparent;
+  active-foreground: @success;
+  selected-active-background: @panel;
+  selected-active-foreground: @success;
+}
+
+window {
+  width: 560px;
+  location: center;
+  anchor: center;
+  border: 1px;
+  border-color: @selected;
+  border-radius: 0px;
+  background-color: @background;
+}
+
+mainbox {
+  padding: 0;
+  background-color: @background;
+  children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+  padding: 10px 12px;
+  border: 0 0 1px 0;
+  border-color: @selected;
+  background-color: @background-alt;
+  children: [ "prompt", "entry" ];
+}
+
+prompt {
+  padding: 0 8px 0 0;
+  text-color: @success;
+  background-color: transparent;
+}
+
+entry {
+  placeholder: "launch";
+  placeholder-color: @muted;
+  text-color: @foreground;
+  background-color: transparent;
+}
+
+listview {
+  lines: 8;
+  fixed-height: true;
+  scrollbar: false;
+  padding: 6px;
+  spacing: 2px;
+  background-color: @background;
+}
+
+element {
+  padding: 7px 9px;
+  margin: 0;
+  border: 0 0 0 1px;
+  border-color: transparent;
+  background-color: transparent;
+  text-color: @foreground;
+}
+
+element normal.normal,
+element alternate.normal {
+  background-color: transparent;
+  text-color: @foreground;
+}
+
+element selected.normal,
+element selected.active,
+element selected.urgent {
+  background-color: @panel;
+  text-color: @accent;
+  border-color: @success;
+}
+
+element urgent {
+  text-color: @urgent;
+}
+
+element active {
+  text-color: @success;
+}
+
+element-text {
+  background-color: transparent;
+  text-color: inherit;
+}
+
+element-text selected,
+element-icon selected {
+  background-color: transparent;
+  text-color: inherit;
+}
+
+message {
+  padding: 8px 12px;
+  background-color: @background;
+  text-color: @muted;
+}

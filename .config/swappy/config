@@ -1,0 +1,14 @@
+[Default]
+save_dir=$HOME/Pictures/Screenshots
+save_filename_format=shot-%Y%m%d-%H%M%S.png
+show_panel=false
+line_size=3
+text_size=18
+text_font=JetBrainsMono Nerd Font
+paint_mode=arrow
+early_exit=true
+fill_shape=false
+auto_save=false
+custom_color=rgba(127,182,201,0.95)
+transparent=false
+transparency=35

@@ -1,0 +1,29 @@
+# Local state
+.cache/
+.local/
+.var/
+
+# Secrets and host-specific files
+.ssh/
+.gnupg/
+.git-credentials
+**/*secret*
+**/*token*
+**/*credentials*
+**/*.key
+**/*.pem
+**/*.p12
+**/*.ovpn
+**/wg*.conf
+
+# Runtime/editor noise
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+Session.vim
+
+# Do not vendor third-party git repos here.
+.config/hypr/plugins/split-monitor-workspaces/
+.config/nvim/.git/
