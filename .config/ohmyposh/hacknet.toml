@@ -1,0 +1,93 @@
+version = 3
+final_space = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+
+[secondary_prompt]
+  template = '[...] '
+  foreground = 'cyan'
+  background = 'transparent'
+
+[transient_prompt]
+  template = '> '
+  background = 'transparent'
+  foreground_templates = ['{{if gt .Code 0}}red{{else}}green{{end}}']
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  # --- СЕССИЯ (User @ Host) ---
+  [[blocks.segments]]
+    type = 'session'
+    style = 'plain'
+    foreground = 'magenta'
+    template = '[{{ .UserName }}@{{ .HostName }}]'
+
+  # --- ПУТЬ ---
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    foreground = 'green'
+    template = ' [{{ .Path }}]'
+    [blocks.segments.properties]
+      style = 'full'
+
+  # --- GIT ---
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    foreground = 'cyan'
+    template = ' git:[{{ .HEAD }}]'
+    [blocks.segments.properties]
+      branch_icon = ''
+      fetch_status = true
+
+  # --- ЯЗЫКИ ПРОГРАММИРОВАНИЯ ---
+  [[blocks.segments]]
+    type = 'python'
+    style = 'plain'
+    foreground = 'yellow'
+    template = ' py:[{{ .Full }}]'
+
+  [[blocks.segments]]
+    type = 'go'
+    style = 'plain'
+    foreground = 'cyan'
+    template = ' go:[{{ .Full }}]'
+
+[[blocks]]
+  type = 'rprompt'
+  overflow = 'hidden'
+
+  # --- БАТАРЕЯ ---
+  [[blocks.segments]]
+    type = 'battery'
+    style = 'plain'
+    template = 'bat:[{{.Percentage}}%]'
+    background = 'transparent'
+    foreground_templates = [
+      "{{if lt .Percentage 20}}red{{else if lt .Percentage 50}}yellow{{else}}green{{end}}"
+    ]
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+  # --- ВРЕМЯ ВЫПОЛНЕНИЯ ---
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = '#6c6c6c'
+    template = ' <{{ .FormattedMs }}>'
+    [blocks.segments.properties]
+      threshold = 5000
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    template = '>_ '
+    foreground_templates = ['{{if gt .Code 0}}red{{else}}green{{end}}']

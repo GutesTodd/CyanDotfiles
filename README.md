@@ -7,7 +7,7 @@ Focus:
 - Lua-based Hyprland config
 - KDE-like grouped workspaces for multiple monitors
 - lightweight terminal-first workstation
-- Waybar, Kitty, Rofi, Swappy, bottom, LazyVim theme
+- Waybar, Kitty, Zsh, Rofi, Swappy, bottom, LazyVim theme
 - no QuickShell, no ML4W widgets, no background workspace daemons
 
 ## Layout
@@ -17,6 +17,7 @@ Focus:
   hypr/
   waybar/
   kitty/
+  ohmyposh/
   zen/
   rofi/
   swappy/
@@ -24,6 +25,12 @@ Focus:
   nvim/
 scripts/
   install.sh
+```
+
+Home-level files:
+
+```text
+.zshrc
 ```
 
 ## Install
@@ -72,6 +79,8 @@ chmod +x scripts/install-zen-config.sh
 
 The script backs up existing config directories to `~/.config/dotfiles-backup-<timestamp>/`,
 creates symlinks, and clones `split-monitor-workspaces` for the Hyprland Lua workspace logic.
+Keep private shell exports such as proxies, API keys, and machine-local credentials in
+`~/.zshrc.local` or the legacy `~/.zshrc_custom`; both files are intentionally ignored.
 
 Wallpaper assets are included in:
 

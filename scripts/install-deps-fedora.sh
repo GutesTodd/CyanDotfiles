@@ -69,6 +69,7 @@ required_packages=(
   hyprlock
   waybar
   kitty
+  zsh
   rofi
   swappy
   grim
@@ -95,6 +96,9 @@ required_packages=(
 optional_packages=(
   wireshark-cli
   termshark
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  oh-my-posh
   jetbrains-mono-fonts
   google-noto-sans-mono-fonts
 )

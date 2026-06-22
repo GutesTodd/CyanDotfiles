@@ -7,6 +7,10 @@
 .ssh/
 .gnupg/
 .git-credentials
+.zshrc.local
+.zshrc_custom
+.zsh_history
+.zcompdump*
 **/*secret*
 **/*token*
 **/*credentials*
