@@ -75,7 +75,7 @@ find_default_profile() {
   die "Не удалось определить профиль Zen из ${profiles_ini}"
 }
 
-link_file() {
+install_file() {
   local source_file="$1"
   local target_file="$2"
   local relative_target="${target_file#${HOME}/}"
@@ -85,8 +85,8 @@ link_file() {
   mkdir -p "$(dirname "${target_file}")" "${backup_dir}/$(dirname "${relative_target}")"
 
   if [[ -e "${target_file}" || -L "${target_file}" ]]; then
-    if [[ -L "${target_file}" && "$(readlink "${target_file}")" == "${source_file}" ]]; then
-      log "Уже подключено: ${target_file}"
+    if [[ ! -L "${target_file}" ]] && cmp -s "${source_file}" "${target_file}"; then
+      log "Уже установлено: ${target_file}"
       return 0
     fi
 
@@ -94,8 +94,8 @@ link_file() {
     mv "${target_file}" "${backup_dir}/${relative_target}"
   fi
 
-  ln -s "${source_file}" "${target_file}"
-  log "Linked: ${target_file} -> ${source_file}"
+  cp "${source_file}" "${target_file}"
+  log "Installed: ${target_file}"
 }
 
 main() {
@@ -106,9 +106,9 @@ main() {
 
   log "Zen profile: ${profile_path}"
 
-  link_file "${repo_dir}/.config/zen/user.js" "${profile_path}/user.js"
-  link_file "${repo_dir}/.config/zen/chrome/userChrome.css" "${profile_path}/chrome/userChrome.css"
-  link_file "${repo_dir}/.config/zen/chrome/userContent.css" "${profile_path}/chrome/userContent.css"
+  install_file "${repo_dir}/.config/zen/user.js" "${profile_path}/user.js"
+  install_file "${repo_dir}/.config/zen/chrome/userChrome.css" "${profile_path}/chrome/userChrome.css"
+  install_file "${repo_dir}/.config/zen/chrome/userContent.css" "${profile_path}/chrome/userContent.css"
 
   log "Zen config installed."
   log "Backup directory: ${backup_dir}"
