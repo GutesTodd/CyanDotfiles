@@ -8,6 +8,7 @@ configs=(
   hypr
   waybar
   kitty
+  fastfetch
   ohmyposh
   rofi
   swappy

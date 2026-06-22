@@ -17,6 +17,7 @@ Focus:
   hypr/
   waybar/
   kitty/
+  fastfetch/
   ohmyposh/
   zen/
   rofi/
