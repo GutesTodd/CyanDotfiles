@@ -114,7 +114,15 @@ missing_alternative_groups=()
 
 package_available() {
   local package="$1"
-  rpm -q "${package}" >/dev/null 2>&1 || dnf -q repoquery --available "${package}" >/dev/null 2>&1
+  local arch
+  arch="$(rpm -E '%{_arch}')"
+
+  if rpm -q "${package}" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  dnf -q repoquery --available --qf '%{name} %{arch}' "${package}" 2>/dev/null |
+    awk -v package="${package}" -v arch="${arch}" '$1 == package && ($2 == arch || $2 == "noarch") { found = 1 } END { exit found ? 0 : 1 }'
 }
 
 add_if_available() {
