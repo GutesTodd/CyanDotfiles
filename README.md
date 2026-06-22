@@ -39,7 +39,15 @@ Review the files first, install dependencies, then link the dotfiles:
 
 ```bash
 ./scripts/install-deps-fedora.sh
+./scripts/install-zsh-deps-fedora.sh
 ./scripts/install.sh
+```
+
+If `oh-my-posh` is not available in enabled Fedora repositories, the zsh helper can use
+the official upstream installer only when explicitly requested:
+
+```bash
+./scripts/install-zsh-deps-fedora.sh --allow-upstream-oh-my-posh
 ```
 
 The dependency script targets Fedora 43/44. Optional Flatpak setup:
