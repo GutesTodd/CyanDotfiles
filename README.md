@@ -27,14 +27,23 @@ scripts/
 
 ## Install
 
-Review the files first, then run:
+Review the files first, install dependencies, then link the dotfiles:
 
 ```bash
+./scripts/install-deps-fedora.sh
 ./scripts/install.sh
 ```
 
 The script backs up existing config directories to `~/.config/dotfiles-backup-<timestamp>/`,
 creates symlinks, and clones `split-monitor-workspaces` for the Hyprland Lua workspace logic.
+
+Wallpaper assets are included in:
+
+```text
+.config/hypr/assets/
+  wallpaper.png
+  lockscreen.jpg
+```
 
 ## Workspace Model
 
