@@ -41,6 +41,14 @@ The dependency script targets Fedora 43/44. Optional Flatpak setup:
 ./scripts/install-deps-fedora.sh --install-zen
 ```
 
+For Fedora 43 Everything with Hyprland from COPR `lionheartp/Hyprland`,
+there is also a focused helper for tools that may be missing from the base install:
+
+```bash
+chmod +x scripts/install-hypr-tools.sh
+./scripts/install-hypr-tools.sh
+```
+
 The script backs up existing config directories to `~/.config/dotfiles-backup-<timestamp>/`,
 creates symlinks, and clones `split-monitor-workspaces` for the Hyprland Lua workspace logic.
 
