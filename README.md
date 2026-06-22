@@ -34,6 +34,13 @@ Review the files first, install dependencies, then link the dotfiles:
 ./scripts/install.sh
 ```
 
+The dependency script targets Fedora 43/44. Optional Flatpak setup:
+
+```bash
+./scripts/install-deps-fedora.sh --enable-flathub
+./scripts/install-deps-fedora.sh --install-zen
+```
+
 The script backs up existing config directories to `~/.config/dotfiles-backup-<timestamp>/`,
 creates symlinks, and clones `split-monitor-workspaces` for the Hyprland Lua workspace logic.
 
