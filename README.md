@@ -49,6 +49,13 @@ chmod +x scripts/install-hypr-tools.sh
 ./scripts/install-hypr-tools.sh
 ```
 
+To switch Qt styling from `qt6ct` to Kvantum:
+
+```bash
+chmod +x scripts/switch-qt-theme-to-kvantum.sh
+./scripts/switch-qt-theme-to-kvantum.sh
+```
+
 The script backs up existing config directories to `~/.config/dotfiles-backup-<timestamp>/`,
 creates symlinks, and clones `split-monitor-workspaces` for the Hyprland Lua workspace logic.
 
