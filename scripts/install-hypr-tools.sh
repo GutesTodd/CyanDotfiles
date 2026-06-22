@@ -8,7 +8,6 @@ set -euo pipefail
 FEDORA_VERSION_REQUIRED="43"
 BUILD_DIR="${HOME}/build"
 LOCAL_BIN="/usr/local/bin"
-CARGO_BIN="${HOME}/.cargo/bin"
 GO_BIN="${HOME}/go/bin"
 QT_THEME_BACKEND="kvantum"
 
@@ -137,19 +136,6 @@ install_dnf_package() {
 
   log "Устанавливаю пакет: ${package}"
   sudo dnf install -y "${package}"
-}
-
-install_first_available_dnf_package() {
-  local package
-
-  for package in "$@"; do
-    if dnf_package_available "${package}"; then
-      install_dnf_package "${package}"
-      return 0
-    fi
-  done
-
-  return 1
 }
 
 clone_or_update() {
@@ -283,27 +269,6 @@ install_cliphist() {
   fi
 }
 
-install_yazi() {
-  if command_exists yazi; then
-    log "yazi уже установлен: $(command -v yazi)"
-    return 0
-  fi
-
-  if install_dnf_package yazi; then
-    return 0
-  fi
-
-  install_dnf_package cargo || install_dnf_package rust || die "rust/cargo нужен для установки yazi"
-
-  log "Устанавливаю yazi через cargo"
-  cargo install --locked yazi-fm yazi-cli
-
-  if [[ ":${PATH}:" != *":${CARGO_BIN}:"* ]]; then
-    warn "${CARGO_BIN} не найден в PATH текущей сессии."
-    warn "Добавь в shell config: export PATH=\"\$HOME/.cargo/bin:\$PATH\""
-  fi
-}
-
 install_termshark() {
   if command_exists termshark; then
     log "termshark уже установлен: $(command -v termshark)"
@@ -322,27 +287,6 @@ install_termshark() {
   if [[ ":${PATH}:" != *":${GO_BIN}:"* ]]; then
     warn "${GO_BIN} не найден в PATH текущей сессии."
     warn "Добавь в shell config: export PATH=\"\$HOME/go/bin:\$PATH\""
-  fi
-}
-
-install_bottom() {
-  if command_exists btm; then
-    log "bottom/btm уже установлен: $(command -v btm)"
-    return 0
-  fi
-
-  if install_first_available_dnf_package bottom btm; then
-    return 0
-  fi
-
-  install_dnf_package cargo || install_dnf_package rust || die "rust/cargo нужен для установки bottom"
-
-  log "Устанавливаю bottom через cargo"
-  cargo install --locked bottom
-
-  if [[ ":${PATH}:" != *":${CARGO_BIN}:"* ]]; then
-    warn "${CARGO_BIN} не найден в PATH текущей сессии."
-    warn "Добавь в shell config: export PATH=\"\$HOME/.cargo/bin:\$PATH\""
   fi
 }
 
@@ -424,7 +368,7 @@ print_summary() {
 EOF
 
   local item
-  for item in hyprlock hyprpaper cliphist yazi tshark termshark btm; do
+  for item in hyprlock hyprpaper cliphist tshark termshark; do
     if command_exists "${item}"; then
       printf '  %-10s %s\n' "${item}" "$(command -v "${item}")"
     else
@@ -458,13 +402,10 @@ EOF
   hyprlock --version
   hyprpaper --version
   cliphist --help
-  yazi --version
   tshark --version
   termshark --version
-  btm --version
 
-Если yazi/termshark/btm установлены через cargo/go, убедись, что в PATH есть:
-  $HOME/.cargo/bin
+Если termshark установлен через go, убедись, что в PATH есть:
   $HOME/go/bin
 EOF
 }
@@ -481,9 +422,7 @@ main() {
   build_hyprlock
   build_hyprpaper
   install_cliphist
-  install_yazi
   install_termshark
-  install_bottom
 
   print_summary
 }

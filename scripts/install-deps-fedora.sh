@@ -79,7 +79,6 @@ required_packages=(
   brightnessctl
   playerctl
   fastfetch
-  yazi
   jq
   git
   curl
@@ -103,7 +102,6 @@ optional_packages=(
 # Install the first available package from each group. Fedora package names can
 # differ slightly between releases or enabled repositories.
 alternative_groups=(
-  "bottom btm"
   "hyprpolkitagent polkit-gnome"
 )
 

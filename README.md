@@ -17,6 +17,7 @@ Focus:
   hypr/
   waybar/
   kitty/
+  zen/
   rofi/
   swappy/
   bottom/
@@ -60,6 +61,13 @@ To switch Qt styling from `qt6ct` to Kvantum:
 ```bash
 chmod +x scripts/switch-qt-theme-to-kvantum.sh
 ./scripts/switch-qt-theme-to-kvantum.sh
+```
+
+To install the Zen Browser UI customizations into the active Flatpak profile:
+
+```bash
+chmod +x scripts/install-zen-config.sh
+./scripts/install-zen-config.sh
 ```
 
 The script backs up existing config directories to `~/.config/dotfiles-backup-<timestamp>/`,

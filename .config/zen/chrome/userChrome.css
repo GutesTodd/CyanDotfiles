@@ -1,0 +1,211 @@
+/* Hacknet x Hyprlust: muted cyber workstation theme for Zen Browser. */
+
+:root {
+  --hack-bg: #060d14;
+  --hack-bg-alt: #0a141f;
+  --hack-panel: rgba(10, 20, 31, 0.9);
+  --hack-panel-soft: rgba(14, 27, 41, 0.76);
+  --hack-border: #17313b;
+  --hack-border-soft: rgba(77, 127, 145, 0.28);
+  --hack-cyan: #7fb6c9;
+  --hack-cyan-dim: #4d7f91;
+  --hack-green: #8bbf9f;
+  --hack-text: #d6e3e7;
+  --hack-muted: #708996;
+
+  --zen-colors-primary: var(--hack-bg) !important;
+  --zen-colors-secondary: var(--hack-bg-alt) !important;
+  --zen-colors-tertiary: var(--hack-panel) !important;
+  --zen-colors-border: var(--hack-border) !important;
+  --zen-primary-color: var(--hack-cyan) !important;
+
+  --toolbar-bgcolor: var(--hack-bg) !important;
+  --toolbar-color: var(--hack-text) !important;
+  --toolbarbutton-icon-fill: var(--hack-muted) !important;
+  --lwt-accent-color: var(--hack-bg) !important;
+  --lwt-text-color: var(--hack-text) !important;
+  --lwt-toolbar-field-background-color: var(--hack-panel) !important;
+  --lwt-toolbar-field-color: var(--hack-text) !important;
+  --lwt-toolbar-field-border-color: var(--hack-border) !important;
+  --lwt-sidebar-background-color: var(--hack-bg-alt) !important;
+  --lwt-sidebar-text-color: var(--hack-text) !important;
+  --arrowpanel-background: var(--hack-bg-alt) !important;
+  --arrowpanel-color: var(--hack-text) !important;
+  --arrowpanel-border-color: var(--hack-border) !important;
+}
+
+#main-window,
+#browser,
+#navigator-toolbox,
+#TabsToolbar,
+#nav-bar,
+#PersonalToolbar,
+#zen-sidebar,
+#sidebar-box,
+#sidebar {
+  background-color: var(--hack-bg) !important;
+  color: var(--hack-text) !important;
+  border-color: var(--hack-border) !important;
+  box-shadow: none !important;
+}
+
+#navigator-toolbox {
+  border-bottom: 1px solid var(--hack-border) !important;
+}
+
+#zen-sidebar,
+#sidebar-box {
+  background-color: var(--hack-bg-alt) !important;
+  border-right: 1px solid var(--hack-border) !important;
+}
+
+#urlbar {
+  color: var(--hack-text) !important;
+}
+
+#urlbar-background,
+#searchbar {
+  background-color: var(--hack-panel) !important;
+  border: 1px solid var(--hack-border) !important;
+  box-shadow: none !important;
+}
+
+#urlbar[focused="true"] #urlbar-background,
+#searchbar:focus-within {
+  border-color: var(--hack-cyan-dim) !important;
+  box-shadow: 0 0 0 1px rgba(127, 182, 201, 0.12) inset !important;
+}
+
+#urlbar-input,
+#urlbar-input::placeholder {
+  color: var(--hack-text) !important;
+}
+
+.urlbarView {
+  background-color: var(--hack-bg-alt) !important;
+  border: 1px solid var(--hack-border) !important;
+  color: var(--hack-text) !important;
+  box-shadow: none !important;
+}
+
+.urlbarView-row {
+  color: var(--hack-muted) !important;
+}
+
+.urlbarView-row[selected],
+.urlbarView-row:hover {
+  background-color: var(--hack-panel-soft) !important;
+  color: var(--hack-text) !important;
+}
+
+.urlbarView-title,
+.urlbarView-url {
+  color: var(--hack-text) !important;
+}
+
+.urlbarView-url,
+.urlbarView-action {
+  color: var(--hack-cyan-dim) !important;
+}
+
+.tabbrowser-tab {
+  color: var(--hack-muted) !important;
+}
+
+.tabbrowser-tab .tab-background {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+}
+
+.tabbrowser-tab:hover .tab-background {
+  background-color: rgba(14, 27, 41, 0.58) !important;
+  border-color: var(--hack-border-soft) !important;
+}
+
+.tabbrowser-tab[selected] {
+  color: var(--hack-text) !important;
+}
+
+.tabbrowser-tab[selected] .tab-background {
+  background-color: rgba(23, 49, 59, 0.72) !important;
+  border-color: rgba(127, 182, 201, 0.42) !important;
+  box-shadow: inset 2px 0 0 var(--hack-cyan-dim) !important;
+}
+
+.tab-close-button {
+  color: var(--hack-muted) !important;
+  fill: var(--hack-muted) !important;
+}
+
+toolbarbutton,
+.toolbarbutton-1,
+.urlbar-icon,
+.toolbarbutton-icon,
+#identity-icon,
+#tracking-protection-icon {
+  color: var(--hack-muted) !important;
+  fill: var(--hack-muted) !important;
+}
+
+toolbarbutton:hover,
+.toolbarbutton-1:hover,
+.urlbar-icon:hover,
+#identity-box:hover #identity-icon,
+#tracking-protection-icon-container:hover #tracking-protection-icon {
+  color: var(--hack-cyan) !important;
+  fill: var(--hack-cyan) !important;
+  background-color: rgba(77, 127, 145, 0.12) !important;
+}
+
+toolbarbutton[open="true"],
+.toolbarbutton-1[open="true"] {
+  color: var(--hack-green) !important;
+  fill: var(--hack-green) !important;
+  background-color: rgba(139, 191, 159, 0.1) !important;
+}
+
+menupopup,
+panel,
+.panel-arrowcontent {
+  --panel-background: var(--hack-bg-alt) !important;
+  --panel-color: var(--hack-text) !important;
+  --panel-border-color: var(--hack-border) !important;
+  background-color: var(--hack-bg-alt) !important;
+  color: var(--hack-text) !important;
+  border-color: var(--hack-border) !important;
+  box-shadow: none !important;
+}
+
+menu,
+menuitem,
+.subviewbutton,
+.panel-subview-body toolbarbutton {
+  color: var(--hack-text) !important;
+}
+
+menu:hover,
+menuitem:hover,
+.subviewbutton:hover,
+.panel-subview-body toolbarbutton:hover {
+  background-color: var(--hack-panel-soft) !important;
+  color: var(--hack-cyan) !important;
+}
+
+#statuspanel-label {
+  background-color: var(--hack-bg-alt) !important;
+  color: var(--hack-cyan) !important;
+  border: 1px solid var(--hack-border) !important;
+}
+
+findbar {
+  background-color: var(--hack-bg-alt) !important;
+  color: var(--hack-text) !important;
+  border-top: 1px solid var(--hack-border) !important;
+}
+
+findbar textbox {
+  background-color: var(--hack-panel) !important;
+  color: var(--hack-text) !important;
+  border-color: var(--hack-border) !important;
+}
