@@ -10,6 +10,7 @@ BUILD_DIR="${HOME}/build"
 LOCAL_BIN="/usr/local/bin"
 CARGO_BIN="${HOME}/.cargo/bin"
 GO_BIN="${HOME}/go/bin"
+QT_THEME_BACKEND="kvantum"
 
 HYPRLOCK_REPO="https://github.com/hyprwm/hyprlock"
 HYPRPAPER_REPO="https://github.com/hyprwm/hyprpaper"
@@ -26,6 +27,56 @@ warn() {
 die() {
   printf '\033[1;31m[ERROR]\033[0m %s\n' "$*" >&2
   exit 1
+}
+
+usage() {
+  cat <<'EOF'
+Usage:
+  install-hypr-tools.sh [options]
+
+Options:
+  --qt-theme-backend kvantum|qt6ct
+      Qt theme backend to install. Default: kvantum.
+
+  -h, --help
+      Show this help.
+
+Examples:
+  ./scripts/install-hypr-tools.sh
+  ./scripts/install-hypr-tools.sh --qt-theme-backend kvantum
+  ./scripts/install-hypr-tools.sh --qt-theme-backend qt6ct
+EOF
+}
+
+parse_args() {
+  while (($#)); do
+    case "$1" in
+      --qt-theme-backend)
+        shift
+        [[ $# -gt 0 ]] || die "После --qt-theme-backend нужно указать kvantum или qt6ct."
+        QT_THEME_BACKEND="$1"
+        ;;
+      --qt-theme-backend=*)
+        QT_THEME_BACKEND="${1#*=}"
+        ;;
+      -h|--help)
+        usage
+        exit 0
+        ;;
+      *)
+        die "Неизвестный аргумент: $1"
+        ;;
+    esac
+    shift
+  done
+
+  case "${QT_THEME_BACKEND}" in
+    kvantum|qt6ct)
+      ;;
+    *)
+      die "Неверный Qt backend: ${QT_THEME_BACKEND}. Используй kvantum или qt6ct."
+      ;;
+  esac
 }
 
 command_exists() {
@@ -292,6 +343,28 @@ install_qt6ct() {
   install_dnf_package qt6ct || die "qt6ct не найден в подключенных DNF-репозиториях. Ручную сборку не выполняю."
 }
 
+install_kvantum() {
+  if rpm -q kvantum >/dev/null 2>&1 || command_exists kvantummanager; then
+    log "Kvantum уже установлен"
+    return 0
+  fi
+
+  install_dnf_package kvantum || die "kvantum не найден в подключенных DNF-репозиториях. Ручную сборку не выполняю."
+}
+
+install_qt_theme_backend() {
+  case "${QT_THEME_BACKEND}" in
+    kvantum)
+      log "Qt theme backend: Kvantum"
+      install_kvantum
+      ;;
+    qt6ct)
+      log "Qt theme backend: qt6ct"
+      install_qt6ct
+      ;;
+  esac
+}
+
 install_tshark() {
   if command_exists tshark; then
     log "tshark уже установлен: $(command -v tshark)"
@@ -330,7 +403,7 @@ print_summary() {
 EOF
 
   local item
-  for item in hyprlock hyprpaper cliphist yazi qt6ct tshark termshark btm; do
+  for item in hyprlock hyprpaper cliphist yazi tshark termshark btm; do
     if command_exists "${item}"; then
       printf '  %-10s %s\n' "${item}" "$(command -v "${item}")"
     else
@@ -338,14 +411,33 @@ EOF
     fi
   done
 
-  cat <<'EOF'
+  case "${QT_THEME_BACKEND}" in
+    kvantum)
+      if command_exists kvantummanager; then
+        printf '  %-10s %s\n' "kvantum" "$(command -v kvantummanager)"
+      else
+        printf '  %-10s %s\n' "kvantum" "kvantummanager не найден в PATH"
+      fi
+      ;;
+    qt6ct)
+      if command_exists qt6ct; then
+        printf '  %-10s %s\n' "qt6ct" "$(command -v qt6ct)"
+      else
+        printf '  %-10s %s\n' "qt6ct" "не найден в PATH"
+      fi
+      ;;
+  esac
+
+  cat <<EOF
+
+Выбранный Qt theme backend:
+  ${QT_THEME_BACKEND}
 
 Команды проверки версий:
   hyprlock --version
   hyprpaper --version
   cliphist --help
   yazi --version
-  qt6ct --version
   tshark --version
   termshark --version
   btm --version
@@ -357,11 +449,13 @@ EOF
 }
 
 main() {
+  parse_args "$@"
+
   check_sudo
   check_fedora
   mkdir -p "${BUILD_DIR}"
 
-  install_qt6ct
+  install_qt_theme_backend
   install_tshark
   build_hyprlock
   build_hyprpaper

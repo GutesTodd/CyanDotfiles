@@ -49,6 +49,12 @@ chmod +x scripts/install-hypr-tools.sh
 ./scripts/install-hypr-tools.sh
 ```
 
+By default this installs Kvantum as the Qt theme backend. To use `qt6ct` instead:
+
+```bash
+./scripts/install-hypr-tools.sh --qt-theme-backend qt6ct
+```
+
 To switch Qt styling from `qt6ct` to Kvantum:
 
 ```bash
