@@ -83,6 +83,18 @@ command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
+append_unique() {
+  local -n target_array="$1"
+  local value="$2"
+  local item
+
+  for item in "${target_array[@]}"; do
+    [[ "${item}" == "${value}" ]] && return 0
+  done
+
+  target_array+=("${value}")
+}
+
 check_sudo() {
   command_exists sudo || die "sudo не найден. Установи sudo или запусти команды установки вручную."
   sudo -v
@@ -372,28 +384,37 @@ install_tshark() {
     return 0
   fi
 
-  local provider
-  provider="$(
+  local candidates=()
+  local package
+
+  while IFS= read -r package; do
+    [[ -n "${package}" ]] && append_unique candidates "${package}"
+  done < <(
     dnf -q repoquery --whatprovides '*/tshark' --qf '%{name}' 2>/dev/null |
-      awk 'NF && !seen[$1]++ { print $1 }' |
-      head -n 1
-  )"
+      awk 'NF && !seen[$1]++ { print $1 }'
+  )
 
-  if [[ -z "${provider}" ]]; then
-    if dnf_package_available wireshark-cli; then
-      provider="wireshark-cli"
-    elif dnf_package_available wireshark; then
-      provider="wireshark"
-    else
-      die "Не найден DNF-пакет, предоставляющий tshark."
+  # Fedora naming can differ between releases/spins. Try common fallbacks too.
+  append_unique candidates wireshark-cli
+  append_unique candidates wireshark
+
+  for package in "${candidates[@]}"; do
+    log "Пробую пакет для tshark: ${package}"
+
+    if ! install_dnf_package "${package}"; then
+      warn "Не удалось установить ${package}; пробую следующий вариант."
+      continue
     fi
-  fi
 
-  log "Пакет для tshark: ${provider}"
-  install_dnf_package "${provider}" || die "Не удалось установить пакет для tshark: ${provider}"
+    if command_exists tshark; then
+      tshark --version | head -n 1
+      return 0
+    fi
 
-  command_exists tshark || die "Пакет ${provider} установлен, но команда tshark не найдена."
-  tshark --version | head -n 1
+    warn "Пакет ${package} установлен, но команда tshark не найдена; пробую следующий вариант."
+  done
+
+  die "Не удалось установить пакет, предоставляющий tshark. Проверь: dnf provides '*/tshark'"
 }
 
 print_summary() {
