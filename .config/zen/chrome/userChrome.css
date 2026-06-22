@@ -1,6 +1,8 @@
 /* Hacknet x Hyprlust: muted cyber workstation theme for Zen Browser. */
 
 :root {
+  color-scheme: dark !important;
+
   --hack-bg: #060d14;
   --hack-bg-alt: #0a141f;
   --hack-panel: rgba(10, 20, 31, 0.9);
@@ -32,10 +34,25 @@
   --arrowpanel-background: var(--hack-bg-alt) !important;
   --arrowpanel-color: var(--hack-text) !important;
   --arrowpanel-border-color: var(--hack-border) !important;
+  --in-content-page-background: var(--hack-bg) !important;
+  --in-content-box-background: var(--hack-bg-alt) !important;
+  --tabpanel-background-color: var(--hack-bg) !important;
+  --newtab-background-color: var(--hack-bg) !important;
+}
+
+#main-window {
+  appearance: none !important;
+  -moz-appearance: none !important;
+  background: var(--hack-bg) !important;
 }
 
 #main-window,
 #browser,
+#appcontent,
+#tabbrowser-tabbox,
+#tabbrowser-tabpanels,
+.browserStack,
+#webextpanels-window,
 #navigator-toolbox,
 #TabsToolbar,
 #nav-bar,
